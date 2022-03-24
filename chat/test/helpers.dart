@@ -10,6 +10,14 @@ Future<void> createDb(RethinkDb r, Connection connection) async {
       .tableCreate('messages')
       .run(connection)
       .onError((error, stackTrace) => {});
+  await r
+      .tableCreate('receipts')
+      .run(connection)
+      .onError((error, stackTrace) => {});
+  await r
+      .tableCreate('typing_events')
+      .run(connection)
+      .onError((error, stackTrace) => {});
 }
 
 Future<void> cleanDb(RethinkDb r, Connection connection) async {
@@ -20,6 +28,16 @@ Future<void> cleanDb(RethinkDb r, Connection connection) async {
       .onError((error, stackTrace) => {});
   await r
       .table('messages')
+      .delete()
+      .run(connection)
+      .onError((error, stackTrace) => {});
+  await r
+      .table('receipts')
+      .delete()
+      .run(connection)
+      .onError((error, stackTrace) => {});
+  await r
+      .table('typing_events')
       .delete()
       .run(connection)
       .onError((error, stackTrace) => {});
